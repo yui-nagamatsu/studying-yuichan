@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>heart.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="heart">HEART</h1>
+<ul>
+<li>漿膜性心膜 serous pericardium で覆われている。</li>
+<li>３層構造
+<ul>
+<li>心内膜 endocardium</li>
+<li>心筋層 myocardium</li>
+<li>心外膜 epicardium</li>
+</ul>
+</li>
+<li>心房中隔 atrial septum：繊維性の組織</li>
+<li>心室中隔 interentricular septum: ほぼ心室筋組織</li>
+<li>心筋細胞同士は介在板を介して連結されており、心筋線維は分岐して筋束 fascilus を形成する。</li>
+</ul>
+<h1 id="%E5%BF%83%E8%87%93%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E8%88%88%E5%A5%AE%E3%81%AE%E4%BC%9D%E5%B0%8E">心臓における興奮の伝導</h1>
+<ul>
+<li>洞房結節 sinoatrial(SA) node</li>
+<li>房室結節 atrioventricular(AV) node</li>
+<li>His束</li>
+<li>右脚・左脚</li>
+<li>Purkinje線維: 伝導速度最速</li>
+<li>心室筋</li>
+</ul>
+<h1 id="%E5%BF%83%E9%9B%BB%E5%9B%B3-elecctrocardiogram-ecg">心電図 elecctrocardiogram; ECG</h1>
+<ul>
+<li>心電図の電気的な活動の一周期(機械的な活動に必ず先行)
+<ul>
+<li>P波: 心房の脱分極(心房の収縮に先行)</li>
+<li>QRS波: 心室の脱分極(心室の収縮に先行)</li>
+<li>T波: 心室の再分極(心房の弛緩に先行)</li>
+</ul>
+</li>
+</ul>
+<h1 id="%E5%BF%83%E5%91%A8%E6%9C%9F-cardiac-cycle">心周期 cardiac cycle</h1>
+<ul>
+<li>心周期 0.8sec
+<ul>
+<li>拡張期 diastole 0.5sec</li>
+<li>収縮期 systole 0.3sec
+<ul>
+<li>心房収縮期 atrial systole</li>
+<li>心室収縮期 ventricular systole</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>拡張期には心房と心室はともに弛緩する。<br>
+心室が収縮を始める直前の心室内の血液量は、拡張末期容積 end-diastolic volume; EDV という。心室が収縮すると、心室内の血液の2/3が駆出され、これを1回拍出量　stroke volume という。収縮期の最後に心室に残っている血液量は収縮末期容積 end-systolic volume 。収縮期に心室から駆出された血液の割合を駆出率 ejection fraction という。</p>
+<h2 id="%E5%BF%83%E5%91%A8%E6%9C%9F%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%9C%A7%E5%A4%89%E5%8C%96">心周期における圧変化</h2>
+<p>左心房において、3つの大きな圧上昇</p>
+<ul>
+<li>a波
+<ul>
+<li>心房の脱分極に続く、収縮中。</li>
+</ul>
+</li>
+<li>c波
+<ul>
+<li>心室内圧 &gt; 心室内圧となり、僧帽弁閉鎖。心室の収縮が始まり、僧帽弁の膨らみが左心房側へ入り込むため。</li>
+</ul>
+</li>
+<li>v波
+<ul>
+<li>肺静脈からの還流に伴って緩やかに上昇。</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E5%BF%83%E5%91%A8%E6%9C%9F%E3%81%A8%E5%9C%A7%E5%AE%B9%E7%A9%8D%E9%96%A2%E4%BF%82">心周期と圧容積関係</h2>
+<ol>
+<li>等容性収縮期 isovolumetric contraction<br>
+心室の収縮開始時に、僧帽弁が閉鎖。この閉鎖により第一音が発生する。僅かの間、大動脈弁が閉鎖したままになるので、心室内圧は上昇するが、容積は変化しない。</li>
+<li>駆出期 ejection phase<br>
+大動脈弁が開放</li>
+<li>等容性弛緩期 isovolumetric conrtaction　　
+大動脈弁閉鎖(大動脈圧 &gt; 左心室圧)</li>
+<li>充満期 filling phase<br>
+僧帽弁開放</li>
+</ol>
+<h2 id="1%E5%9B%9E%E5%BF%83%E4%BB%95%E4%BA%8B%E9%87%8F">1回心仕事量</h2>
+<pre class="hljs"><code><div>1回心仕事量 = 収縮期に生じる心室内圧の上昇 * 1回心拍出量
+</div></code></pre>
+<h2 id="%E5%A4%A7%E5%8B%95%E8%84%88%E5%9C%A7%E6%9B%B2%E7%B7%9A">大動脈圧曲線</h2>
+<ul>
+<li>収縮期圧 systolic pressure: 120mmHg</li>
+<li>左心室が弛緩すると血液はもはや大動脈に流入せず、大動脈圧は若干低下する、</li>
+<li>重複脈波 dicrotic wave
+<ul>
+<li>切痕 incisura / 重複切痕　dicrotic notch と呼ばれる。</li>
+<li>大動脈弁閉鎖により、大動脈圧に一過性の波打ち現象。</li>
+</ul>
+</li>
+<li>Windkessel効果
+<ul>
+<li>大動脈弁閉鎖後に動脈血圧が維持される現象</li>
+</ul>
+</li>
+<li>拡張期血圧 80mmHg</li>
+</ul>
+<h2 id="%E9%A0%B8%E9%9D%99%E8%84%88%E6%B3%A2">頸静脈波</h2>
+<p>右心房の圧変化は頸静脈波か読み取る。</p>
+<ul>
+<li>a波: 三尖弁開放時の右心房の収縮により、圧上昇。
+<ul>
+<li>c波: 心室の収縮により三尖弁の弁尖が右心房に押し込まれる。</li>
+</ul>
+</li>
+<li>x切痕: 三尖弁が閉鎖し、心房は拡張。圧の急激な減少。</li>
+<li>v波: 心房が充満し、圧が上昇。</li>
+<li>y切痕: 三尖弁が開放し、心房内の血液が心室へ移動。</li>
+</ul>
+<p>cf. 三尖弁閉鎖不全症 tricuspid incompetence<br>
+三尖弁が適切に閉鎖しない。<br>
+右心房への血液の逆流により、c波とv波が融合して大きな一つの波となる一方、x切痕は浅くなる。</p>
+<h1 id="%E5%BF%83%E7%AD%8B%E3%81%AE%E6%B4%BB%E5%8B%95%E9%9B%BB%E4%BD%8D-myocardium-action-potential">心筋の活動電位 Myocardium action potential</h1>
+<h2 id="%E5%BF%83%E5%AE%A4%E7%AD%8B">心室筋</h2>
+<ul>
+<li>第0相 脱分極相: Na+流入</li>
+<li>第1相 初期再分極相: K+流出</li>
+<li>第2相 plateau相: L型Ca2+チャネル開口</li>
+<li>第3相 再分極相: 内向き整流K+チャネル開口</li>
+<li>第4相 静止電位相</li>
+</ul>
+<p>心筋の活動電位が長いのは、チャネルの不活化が遅いCa2+が流入するから。</p>
+<h1 id="%E5%BF%83%E9%9F%B3%E5%9B%B3-phonocardiogram">心音図 phonocardiogram</h1>
+<p>Ⅰ音とⅡ音は、心臓の弁が閉鎖し、弁尖にかかる突然の張力が心臓壁を振動させ、心臓内の血液に渦状の流れを引き起こすため生じる。</p>
+<ul>
+<li>Ⅰ音(S1)
+<ul>
+<li>&quot;lub&quot;。</li>
+<li>心室収縮期の初め(R波の直後)に起こる三尖弁と僧帽弁の閉鎖によって生じる。</li>
+<li>大きい。</li>
+</ul>
+</li>
+<li>Ⅱ音(S2)
+<ul>
+<li>&quot;dup&quot;。</li>
+<li>T波(心室収縮期)の終わりに起こる大動脈弁と肺動脈弁の閉鎖により生じる。</li>
+<li>A2(大動脈成分)とP2(肺動脈成分)に分かれ、A2がP2に先行。</li>
+</ul>
+</li>
+<li>Ⅲ音(S3)
+<ul>
+<li>Ⅱ音の後。等容性収縮期末期の房室弁の開放により生じる。</li>
+<li>心尖部で最も聴取しやすく、若年層で聴取されることもある。</li>
+<li>心室ギャロップ KEN-TU-CKY</li>
+</ul>
+</li>
+<li>Ⅳ音(S4)
+<ul>
+<li>Ⅰ音の直前。心房の収縮により生じる血流の振動により発生。</li>
+<li>心房ギャロップ TE-NNE-SSEE</li>
+</ul>
+</li>
+</ul>
+<p>S1-S4以外の時点で聴取される心音は、心雑音 murmur。</p>
+<h2 id="%E7%95%B0%E5%B8%B8%E5%BF%83%E9%9F%B3">異常心音</h2>
+<h3 id="%E9%9F%B3%E3%81%AE%E5%8E%9F%E5%9B%A0">音の原因</h3>
+<p>弁の異常に起因。いずれも左心系の弁(大動脈弁、僧帽弁)に生じる。</p>
+<ul>
+<li>閉鎖不全 valvular incompetence
+<ul>
+<li>弁が完全に閉鎖せず、血液が漏れやすい状態。血液が逆流し、渦巻い状の流れや乱流を形成する。</li>
+</ul>
+</li>
+<li>狭窄 valvular stenosis
+<ul>
+<li>弁が狭くなった状態で、血液を通過させるのに高圧が必要、それにより血液の乱流が生じる。</li>
+</ul>
+</li>
+</ul>
+<h3 id="%E9%9F%B3%E3%81%AE%E5%88%86%E9%A1%9E">音の分類</h3>
+<ul>
+<li>収縮期雑音
+<ul>
+<li>駆出性雑音 ejection murmur: 心室の収縮期初期。</li>
+<li>収縮後期雑音 laye systolic murmur</li>
+<li>全収縮期雑音 pansystolic murmur</li>
+</ul>
+</li>
+<li>拡張期雑音</li>
+</ul>
+<h2 id="%E5%A4%A7%E5%8B%95%E8%84%88%E5%BC%81%E7%8B%AD%E7%AA%84%E7%97%87">大動脈弁狭窄症</h2>
+<ul>
+<li>原因
+<ul>
+<li>弁尖に対する炎症性の障害(リウマチ性心疾患)</li>
+<li>先天性奇形</li>
+<li>弁尖の肥厚性変性、石灰化</li>
+</ul>
+</li>
+<li>大きな異常心音。</li>
+<li>大動脈弁の狭窄が進むにつれて、大動脈への駆出圧が増加するため、心仕事量が増加。最終的に左心室肥大が起きる。O2の心室筋への拡散効率が下がり、虚血や心不全につながる。</li>
+</ul>
+<h2 id="%E5%83%A7%E5%B8%BD%E5%BC%81%E7%8B%AD%E7%AA%84%E7%97%87">僧帽弁狭窄症</h2>
+<ul>
+<li>原因
+<ul>
+<li>炎症後の肥厚や瘢痕</li>
+</ul>
+</li>
+<li>拡張中期〜末期にかけて、低調波の重々しい雑音で、Ⅲ音とⅣ音と誤解された水。</li>
+</ul>
+<h2 id="%E5%A4%A7%E5%8B%95%E8%84%88%E5%BC%81%E9%96%89%E9%8E%96%E4%B8%8D%E5%85%A8%E7%97%87">大動脈弁閉鎖不全症</h2>
+<p>大動脈(弁)逆流 aortic regurgitation</p>
+<ul>
+<li>原因
+<ul>
+<li>高血圧症</li>
+<li>弁の炎症</li>
+<li>動脈硬化症</li>
+<li>膠原病(Marfan症候群)</li>
+</ul>
+</li>
+<li>吹鳴性、灌水性の雑音。拡張期早期に大きく、末期に向けて減衰。</li>
+<li>左心室に左心房を介する肺循環からの血液の流入＋大動脈からの逆流により、1回心拍出量が増加するので、穏やかな収縮期雑音も。</li>
+</ul>
+<h2 id="%E5%83%A7%E5%B8%BD%E5%BC%81%E9%96%89%E9%8E%96%E4%B8%8D%E5%85%A8%E7%97%87">僧帽弁閉鎖不全症</h2>
+<ul>
+<li>心室の収縮期全域にわたり左心房への血液の逆流</li>
+<li>全収縮期雑音(僧帽弁領域で最大)が、S1とS2を覆い隠す。</li>
+<li>僧帽弁の逸脱 prolapse of the mitral valve; MVP により、収縮後期雑音。</li>
+</ul>
+<h1 id="%E5%BF%83%E6%8B%8D%E5%87%BA%E9%87%8F-co-cardiac-output">心拍出量 CO; cardiac output</h1>
+<p>心拍出量 CO; cardiac output = 4-7L/min<br>
+心係数 CI; cardiac index = 2.6-4.2 L/min/m2<br>
+静脈還流量 venous return: 1分あたりに大静脈から心臓に戻ってくる血液量</p>
+<pre class="hljs"><code><div>心拍出量(L/min) = 心拍数(回/min) * 1回心拍出量(L/回)  
+心係数 CI; cardiac index = CO /体表面積
+</div></code></pre>
+<h2 id="%E6%B8%AC%E5%AE%9A%E6%96%B9%E6%B3%95">測定方法</h2>
+<pre class="hljs"><code><div>CO = O2摂取量[mL/min] / (CaO2 - CvO2)  
+CaO2 = 動脈血のO2含有量(=肺静脈の含有量)  
+CvO2 = 静脈血のO2含有量(=肺動脈の含有量) 
+</div></code></pre>
+<p>cf. Fickの原理</p>
+<pre class="hljs"><code><div>ある器官で摂取・放出される物質の量 = その器官を流れる血液量 * その器官に流れる動静脈血中の物質の濃度差
+</div></code></pre>
+<h1 id="%E5%BF%83%E8%87%93%E3%81%AE%E5%8B%95%E6%85%8B">心臓の動態</h1>
+<ul>
+<li>変時作用 chorontropic effect: 生理的な心拍数の変化
+<ul>
+<li>陽性変時作用 positive chronotropy: 交感神経の興奮による頻脈 bradycardia (心拍動の増加 &gt; 100回/min)</li>
+<li>陰性変時作用 negative chronotropy: 迷走神経の興奮による徐脈 tachycardia (心拍動の低下 &lt; 60回/min)</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E8%BF%B7%E8%B5%B0%E7%A5%9E%E7%B5%8C%E3%81%AB%E3%82%88%E3%82%8B%E5%88%BA%E6%BF%80">迷走神経による刺激</h2>
+<h3 id="%E5%AE%89%E9%9D%99%E6%99%82">安静時</h3>
+<p>副交感神経の節前線維は、心臓において節後線維とシナプスを形成。節後線維(短い)は、洞房結節と房室結節の細胞とシナプスを形成し、神経終末よりアセチルコリンを放出し、M2受容体を介して心拍数を低下させる。また、迷走神経刺激は、房室結節線維束の興奮性を低下させることにより、心房から心室への心臓内のインパルス伝導速度を低下させる。<br>
+cf. 健常成人の安静時心拍数は70回/minだが、洞房結節のポテンシャル(神経支配なし)は100回/min。つまり、迷走神経は洞房結節に対して持続的抑制を行なっているということ。</p>
+<h3 id="%E8%BF%B7%E8%B5%B0%E7%A5%9E%E7%B5%8C%E5%88%BA%E6%BF%80%E3%81%AE%E3%83%A1%E3%82%AB%E3%83%8B%E3%82%BA%E3%83%A0">迷走神経刺激のメカニズム</h3>
+<p>迷走神経終末より分泌するアセチルコリンは、K+に対する結節細胞の透過性を増加させる。これにより、ペースメーカー細胞脱分極の勾配の減少と膜の過分極が起きる。これらの変化は、ペースメーカー電位が閾値に達するまでの時間を遅らせるので、次の活動電位の発生を遅らせて心拍数を減少させる。</p>
+<h2 id="%E4%BA%A4%E6%84%9F%E7%A5%9E%E7%B5%8C%E3%81%AB%E3%82%88%E3%82%8B%E5%88%BA%E6%BF%80">交感神経による刺激</h2>
+<p>心臓に支配する交感神経の節前線維はT1〜T6にある。これらが胸部交感神経節でシナプスを形成し、節後繊維(長い)が心臓を支配する。節後線維終末はノルアドレナリンを分泌し、心拍数を増加させる。<br>
+心拍数は、副腎髄質から分泌される循環血液中のカテコールアミン(eg. アドレナリン、ノルアドレナリン)でも増加する。これらはβ1-アドレナリン受容体を介して膜結合性のアデニル酸シクラーゼを活性化させる。その結果、心筋細胞内のcAMP濃度が上昇し、以下の4つの効果が現れる。</p>
+<ol>
+<li>cAMPは直接ペースメーカーチャネルに作用してチャネルの邂逅確率を増加させ、ペースメーカー細胞の脱分極頻度を上昇させる。ペースメーカー電位の勾配が急峻化し、洞房結節細胞の膜電位が閾値に達するのが早まるため、連続的に発生する活動電位の感覚が短くなる。</li>
+<li>β1-アドレナリン受容体刺激がプロテインキナーゼAを活性化し、遅延整流性K+チャネルをリン酸化する。これにより、心室筋細胞の再分極が刺激され活動電位が短縮する。</li>
+<li>陽性変力作用による変弛緩作用 lusitropic effect<br>
+→心筋細胞の弛緩が速まる。</li>
+<li>陽性変伝導作用 dromotropic effect<br>
+→交感神経刺激が房室結節の伝導時間を低下させる。</li>
+</ol>
+<h1 id="1%E5%9B%9E%E5%BF%83%E6%8B%8D%E5%87%BA%E9%87%8F%E3%81%AE%E8%AA%BF%E7%AF%80">1回心拍出量の調節</h1>
+<ul>
+<li>内因性調節機構 intrinsic regulation
+<ul>
+<li>収縮力の調節機構。拡張末期の心筋線維の伸展度合いによって決定される。</li>
+</ul>
+</li>
+<li>外因性調節機構 extrinsic regulation
+<ul>
+<li>自律神経の活動状態や循環中のホルモン量によって決定される。</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E5%86%85%E5%9B%A0%E6%80%A7%E8%AA%BF%E7%AF%80-frank-staring%E3%81%AE%E6%B3%95%E5%89%87">内因性調節; Frank-Staringの法則</h2>
+<p>Frank-Staringの法則: 心室の収縮エネルギーは、心室壁を形成する筋線維の初期長の関数。<br>
+骨格筋と同様、心筋が伸展されるとより大きな発生張力を示す。</p>
+<p>
+拡張期には心筋線維が伸展されるため、前負荷 preload という張力にさらされる。続いて起きる収縮の強さは前負荷の程度に依存する。正常な心臓では前負荷が増えれば増えるほど収縮はより強力になり、1回心拍出量も増加する。そのためより多くの仕事をするようになり、効率が低下する。その結果、冠状動脈は心臓が必要とするのに十分なO2を供給することができなくなり、心筋虚血 mycardinal ischema に陥り、初期の心不全が悪化する。  
+つまり、心室は拡張期に流入してきた血液の量だけ収縮期に駆出する。  
+結果的に、心臓は心拍出量を静脈還流量に一致するように自律的に調節している。  
+しかし、心室が過剰に伸展させられた場合、収縮期圧と1回心拍出量はともに低下する。これは心不全の兆候。  
+<p>
+Frank-Staringの機構により、2つの心室からの駆出量は確実に一致する。  
+大動脈と動脈系の圧力は心室からの血液の駆出圧に抵抗し、心臓が血液を駆出する際の負荷(後負荷 afterload) になる。  
+突然の後負荷の増加は、1回拍出量の僅かな低下を起こす。しかし、肺循環からの還流血液量が一定である限り、拡張期末期に左心室はより伸展され、前負荷が増加する。これにより心室筋の収縮力が増加して、正常な1回心拍出量が復活する。
+<h3 id="%E6%8B%A1%E5%BC%B5%E6%9C%AB%E6%9C%9F%E5%AE%B9%E7%A9%8D-edv%E3%81%AE%E6%B1%BA%E5%AE%9A%E5%9B%A0%E5%AD%90">拡張末期容積; EDVの決定因子</h3>
+<p>Frank-Starlingの法則より、EDVがCOと心仕事量の重要な決定因子。</p>
+<ul>
+<li>EDVの決定因子
+<ul>
+<li>心臓外圧(胸腔内圧 intrathoracic pressure)への影響因子
+<ul>
+<li>呼吸の深さとリズムの影響を受ける</li>
+<li>吸気では横隔膜の収縮が胸腔容積を増大し腹腔容積を減じる。この結果、胸腔内圧は低下し腹腔内圧は増加する。この圧力差は腹腔から胸腔への血液の流れを促進し、右心室の充満を増強する。</li>
+</ul>
+</li>
+<li>心臓内圧(中心静脈圧 CVP;central venous pressure)への影響因子
+<ul>
+<li>、重力、呼吸、筋ポンプ、末梢静脈の緊張状態 tone、血液量の影響を受ける。</li>
+<li>上・下大静脈の心臓への入り口の圧と等しい</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E5%A4%96%E5%9B%A0%E6%80%A7%E8%AA%BF%E7%AF%80-%E4%BA%A4%E6%84%9F%E7%A5%9E%E7%B5%8C%E7%B3%BB%E3%81%AB%E3%82%88%E3%82%8B%E5%BF%83%E7%AD%8B%E5%8F%8E%E7%B8%AE%E6%80%A7%E3%81%AE%E5%B0%B1%E8%81%B7">外因性調節; 交感神経系による心筋収縮性の就職</h2>
+<p>外因性因子による収縮エネルギーの変化は、心筋の変力状態 inotropic state の変化と考えられ
+心筋線維の初期筋長の影響は受けない。心筋を支配する交感神経系の活性化や、循環血液中の強心作動性物質の濃度上昇は上昇は、陽性変力作用 positive inotropic effect (収縮期の心室収縮力の増強作用)を示す。これにより心室のEDVが減少し、収縮期圧が上昇し、収縮の仕事量が増加する。</p>
+<h3 id="%E5%BC%B7%E5%BF%83%E4%BD%9C%E5%8B%95%E6%80%A7%E7%89%A9%E8%B3%AA">強心作動性物質</h3>
+<p>心筋に対して陽性変力作用を示す物質のこと。多くの強心作動性物質は、cAMP-プロテインキナーゼ系を介して作用する。</p>
+<ul>
+<li>強心作動性物質
+<ul>
+<li>カテコールアミン(アドレナリン)
+-β1受容体を活性化し、細胞内cAMP濃度を上昇させ、L型カルシウムチャネルをプロテインキナーゼAを介してリン酸化する。このリン酸化によりチャネルの開口時間が延長してCa2+の流入が増加して、収縮が増強する。</li>
+<li>アンジオテンシンⅡ
+<ul>
+<li>交感神経終末からのノルアドレナリン分泌を増加する。</li>
+</ul>
+</li>
+<li>Ca2+</li>
+<li>グルカゴン</li>
+<li>インスリン</li>
+<li>サイロキシン</li>
+<li>カフェイン
+<ul>
+<li>ホスホ時エステラーぜを抑制し、cAMPの不活性化を遅延させる。</li>
+</ul>
+</li>
+<li>テオフィリン
+<ul>
+<li>カフェインと同様。</li>
+</ul>
+</li>
+<li>ジゴキシン(強心配糖体)
+<ul>
+<li>細胞膜のNa+-K+ポンプを抑制し、細胞内のNa+濃度を上昇させる。Ca2+は、Na+-Ca2+交換機構で細胞内から排出されるので、Ca2+の排出減少と筋小胞体におけるCa2+取り込みが生じる。結果、より多くのCa2+が細胞内に貯蔵され、大量のCa2+が活動電位で放出されるため、より強い収縮が起きる。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>
+cf. 陰性変力作用を示す物質
+- β受容体拮抗薬(プロプラノロール)
+- Ca2+チャネル阻害薬(ベラパミル)
+- 麻酔薬(バルピタール, 揮発性物質)
+- 酸欠症 acidemia (血液の低pH)
+<h1 id="%E5%BF%83%E4%B8%8D%E5%85%A8-heart-failure">心不全 heart failure</h1>
+<p>正常な心臓の充満圧では体の代謝に十分な血液の駆出ができなくなることで生じる。</p>
+<h2 id="%E5%88%86%E9%A1%9E">分類</h2>
+<ul>
+<li>心原性障害
+<ul>
+<li>心筋収縮性障害を原因とするもの
+<ul>
+<li>心筋梗塞 myocardial infarction
+<ul>
+<li>冠動脈血栓症や心臓発作などにより、正常な血液の供給が絶たれることで心臓が低酸素や虚血状態に陥り正常心筋が消失すること</li>
+</ul>
+</li>
+<li>心筋症 myocarditis
+<ul>
+<li>心筋の炎症</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>心臓の充満と駆出の障害を原因とするもの
+<ul>
+<li>心房細動
+<ul>
+<li>心室内に収縮開始時に十分な血液が充満せず、COが低下する。</li>
+</ul>
+</li>
+<li>僧帽弁狭窄症における弁口狭窄
+<ul>
+<li>左心室への正常な血液充満を阻害</li>
+</ul>
+</li>
+<li>心外膜炎・心タンポナーゼ
+<ul>
+<li>心外膜が硬化し、充満期に心室が十分拡張できず、EDVが低下する。</li>
+</ul>
+</li>
+<li>大動脈弁狭窄症・僧帽弁閉鎖不全症
+<ul>
+<li>心室からの血液の駆出を障害</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>心外性障害
+<ul>
+<li>前負荷の増加を原因とするもの
+<ul>
+<li>前負荷は拡張期における血液充満の結果、心臓壁に生じる張力で、拡張末期圧によって決まる。
+<ul>
+<li>前負荷の増加が見られる疾患
+<ul>
+<li>腎不全: Na+と水分の体内貯留による血液量の増加</li>
+<li>心臓弁逆流症</li>
+<li>心筋梗塞</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>後負荷の増加を原因とするもの
+<ul>
+<li>後負荷は大動脈弁が開放状態の時の大動脈内圧で、左心室が大動脈に血液を送り出すために克服しなければならない。
+<ul>
+<li>後負荷の増加が見られる疾患
+<ul>
+<li>高血圧症</li>
+<li>大動脈弁狭窄</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E6%80%A5%E6%80%A7%E5%BF%83%E4%B8%8D%E5%85%A8">急性心不全</h2>
+<p>例えば、冠動脈血栓症になると、血液供給が遮断された領域の心筋のO2が欠乏し、左心不全 left-sided heart failure が起きる。最初の影響は、COと動脈血圧の低下をもたらす。そしてこれを修復させようとして種々の代償機構が働く。<br>
+動脈血圧が低下することで、動脈圧受容器の感受性も低下する。すると、心臓と血管への交感神経刺激の反射的増加が起きる。副腎髄質からのあのレナリンとノルアドレナリンの分泌も増加する。(迷走神経刺激は減少する。)その結果、心拍数が上昇する。この影響は、正常な心筋部分の収縮力増加によって支えられている。これらの機構により、心臓・脳への血流がなんとか保たれる。<br>
+上記の変化は冠動脈血栓症発症から約30s以内に起こり、心臓発作に特徴的な、頻脈、蒼白、発汗を起こし、左腕に放散する胸痛を伴う。(狭心症 angina pectoris)<br>
+交感神経刺激亢進により起こる静脈収縮は、静脈系の血流の移動を起こし、障害されていない右心系への静脈還流量の増加は1回心拍出量を増加させ、肺循環への血流を増加させる。正常な心臓では、Frank-Starlingの機構により左心室拍出量の急速増加が見られるが、上記の状況下では左心室機能の低下により、静脈還流量の増加に対して適切な対応ができない。その結果、EDVとEDPが増加(前負荷の増加)し、次第に左心室拍出量が増加し、右心室拍出量に対応できるようになる。<br>
+軽度の場合はこのようにして対応は可能。その後数ヶ月間で、残った心筋が肥大化して血液供給が低下し、部分的に低酸素状態になった心筋領域には血管新生が起こり、やがて通常の生活が送れるようになる。</p>
+<h2 id="%E6%85%A2%E6%80%A7%E5%BF%83%E4%B8%8D%E5%85%A8">慢性心不全</h2>
+<ul>
+<li>慢性心不全におけるCO低下の原因
+<ul>
+<li>心筋の虚血障害</li>
+<li>弁の機能以上</li>
+<li>慢性高血圧</li>
+</ul>
+</li>
+</ul>
+<p>心不全では、COが皮膚、内臓、心臓、脳、骨格筋に再配分される。　　
+腎血流の低下は特に甚大な影響をもたらす。輸入細動脈の収縮によりレニン分泌が増加し、アンジオテンシンⅡ濃度が上昇する。これらは強力な血管収縮作用と副腎皮質からのアルドステロン分泌刺激作用を持つ。輸入再動脈の収縮による糸球体濾過量の低下は、アルドステロン増加により起こるNa+貯留とともに体液の貯留を増加させ、血漿量の増加をもたらす。</p>
+<h2 id="%E5%BF%83%E4%B8%8D%E5%85%A8%E3%81%AB%E3%82%88%E3%82%8B%E6%B5%AE%E8%85%AB">心不全による浮腫</h2>
+<p>慢性心不全では、体液貯留のために血漿量が増加する。これは膠質浸透圧を低下させる一方、毛細血管圧を増大させ、その結果Starling力により濾過量を増大させる方向に動き、その結果組織に体液が貯留し浮腫をきたす。<br>
+右心不全においては、毛細血管圧の上昇は末梢組織(特にくるぶし)の浮腫を起こす。<br>
+虚血性心疾患で見られる急性左心不全においては、左心房と肺循環系の圧が上昇する。肺静脈圧の上昇は肺静脈拡張をきたし、肺の毛細血管網圧が上昇する。これは肺の間質への体液の漏出をきたし、最終的に肺水腫となる。</p>
+<h2 id="%E9%87%8D%E7%97%87%E5%BF%83%E4%B8%8D%E5%85%A8%E3%81%AE%E6%B2%BB%E7%99%82">重症心不全の治療</h2>
+<ul>
+<li>目的
+<ul>
+<li>心臓の仕事量を減らす</li>
+<li>循環血液量を減らし、心拡大を防ぐ。
+<ul>
+<li>プロセミドなどの利尿薬投与により可能。</li>
+</ul>
+</li>
+<li>心筋の収縮力改善
+<ul>
+<li>強心配糖体やβ1-受容体拮抗薬の投与により可能。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</body>
+</html>
