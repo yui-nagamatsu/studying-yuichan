@@ -23,7 +23,6 @@
 ## NORMAL ECG
 ![](images/normal_ecg.png)  
 A mild increase in V1-V3 is acceptable.
-V1-V3のSTの軽度の上昇は許容。
 
 ## REFERENCES
 - https://med.toaeiyo.co.jp/contents/ecg/index.html
